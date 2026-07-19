@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audex — Your offline audio &amp; audiobook player</title>
+<meta name="description" content="Audex plays your local audio files and reads your PDFs/EPUBs aloud, fully offline. No ads, no tracking, no subscription.">
+<link rel="icon" type="image/png" href="icon.png">
+<style>
+  :root {
+    --coral: #F2502C;
+    --coral-bright: #FF7A4D;
+    --bg: #ffffff;
+    --surface: #F7F5F3;
+    --text: #1B1815;
+    --text-muted: #6B655F;
+    --border: #EAE6E1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --coral: #FF5A36;
+      --bg: #14120F;
+      --surface: #1E1B17;
+      --text: #F5F2EE;
+      --text-muted: #A8A199;
+      --border: #2B2822;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 64px 24px 96px; }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
+  header img { width: 56px; height: 56px; border-radius: 16px; }
+  header .word { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+  header .word .x { color: var(--coral); }
+  .tagline { font-size: 20px; color: var(--text-muted); margin: 0 0 40px; max-width: 46ch; }
+  .cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--coral), var(--coral-bright));
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 13px 26px;
+    border-radius: 999px;
+    margin-bottom: 56px;
+  }
+  .cta.disabled { opacity: 0.5; pointer-events: none; }
+  h2 { font-size: 15px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin: 40px 0 16px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+  }
+  .card h3 { margin: 0 0 6px; font-size: 16px; }
+  .card p { margin: 0; color: var(--text-muted); font-size: 14px; }
+  footer {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text-muted);
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  footer a { color: var(--text-muted); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="icon.png" alt="Audex icon">
+      <div class="word">Aud<span class="x">e</span>x</div>
+    </header>
+
+    <p class="tagline">Your local audio and audiobook player. Plays the music, voice notes, and recordings already on your phone, and reads your PDFs and EPUBs aloud — fully offline.</p>
+
+    <a class="cta disabled" href="#">Coming soon to Google Play</a>
+
+    <h2>What it does</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Local files, organized</h3>
+        <p>Browse by folder, album, or artist. Import a folder straight from Google Drive if that's where your files live.</p>
+      </div>
+      <div class="card">
+        <h3>Books read aloud</h3>
+        <p>Import a PDF or EPUB and Audex reads it aloud with a real offline voice — no internet needed once the voice is downloaded.</p>
+      </div>
+      <div class="card">
+        <h3>Android Auto</h3>
+        <p>Browse and play everything from the car, with a proper queue, shuffle, and resume.</p>
+      </div>
+      <div class="card">
+        <h3>Your data stays yours</h3>
+        <p>No ads, no analytics, no tracking. Anything backed up lives in your own Google Drive, not on our servers — because we don't have any.</p>
+      </div>
+    </div>
+
+    <h2>One-time purchase</h2>
+    <p style="color:var(--text-muted)">Free to try for a month. After that, a single one-time payment unlocks Audex for good — no subscription, and it works on every device signed into your Google account.</p>
+
+    <footer>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="mailto:mazen.m.khaliel@gmail.com">Contact</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audex — Privacy Policy</title>
+<link rel="icon" type="image/png" href="icon.png">
+<style>
+  :root {
+    --coral: #F2502C;
+    --bg: #ffffff;
+    --surface: #F7F5F3;
+    --text: #1B1815;
+    --text-muted: #6B655F;
+    --border: #EAE6E1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --coral: #FF5A36;
+      --bg: #14120F;
+      --surface: #1E1B17;
+      --text: #F5F2EE;
+      --text-muted: #A8A199;
+      --border: #2B2822;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 56px 24px 96px; }
+  a { color: var(--coral); }
+  h1 { font-size: 28px; margin-bottom: 4px; }
+  .updated { color: var(--text-muted); font-size: 14px; margin-bottom: 40px; }
+  h2 { font-size: 18px; margin-top: 40px; }
+  p, li { color: var(--text); }
+  ul { padding-left: 20px; }
+  .summary {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 32px;
+  }
+  .summary p { margin: 0; }
+  code {
+    background: var(--surface);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 0.92em;
+  }
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
+  footer a { color: var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: July 2026</p>
+
+  <div class="summary">
+    <p><strong>The short version:</strong> Audex has no backend server. Everything it stores lives on your device or in your own Google Drive account — never on a server we run, because we don't run one. We don't sell, share, or analyze your data, and we don't show ads.</p>
+  </div>
+
+  <h2>What Audex accesses, and why</h2>
+
+  <h3>Google Sign-In</h3>
+  <p>Audex uses Google Sign-In to identify your account. It stores your email address and display name in encrypted local storage on your device only. This is never transmitted to any server we operate.</p>
+
+  <h3>Google Drive — folder import (read-only)</h3>
+  <p>If you choose to import an audio folder from Google Drive, Audex requests read-only access to browse and download the files you select. It never accesses any other file in your Drive, and never writes to your regular, visible Drive space.</p>
+
+  <h3>Google Drive — app data folder</h3>
+  <p>Audex uses Google's hidden, per-app <code>appDataFolder</code> space (invisible in your regular Drive, and inaccessible to any other app) for two things:</p>
+  <ul>
+    <li><strong>Backup</strong> — an optional, user-controlled backup of your local playback history, resume positions, and settings, so a phone change or reinstall doesn't lose them.</li>
+    <li><strong>Trial status</strong> — a small file recording when your account first started using Audex, so a free trial can't be reset by reinstalling the app. It contains a single timestamp — nothing else about you or your usage.</li>
+  </ul>
+  <p>Both live entirely inside your own Google account. We never see or receive this data ourselves.</p>
+
+  <h3>Local device storage</h3>
+  <p>Audex stores your playback history, resume positions, settings, downloaded/synthesized audio, and any books you import directly on your device, using Android's standard local database and file storage. This never leaves your device unless you explicitly use the backup feature above.</p>
+
+  <h3>Google Play Billing</h3>
+  <p>Purchases are handled entirely by Google Play. Audex never collects or sees your payment details (card number, billing address, etc.) — Google Play does. Audex only receives a purchase confirmation from Google's own systems.</p>
+
+  <h3>Feedback (bug reports / feature requests)</h3>
+  <p>Audex's "Report a bug" and "Request a feature" buttons open your own email app with a pre-filled draft addressed to the developer. Audex does not send anything itself — nothing leaves your device unless you personally choose to tap Send in your own email app.</p>
+
+  <h2>What Audex does <em>not</em> do</h2>
+  <ul>
+    <li>No analytics or usage-tracking SDKs of any kind</li>
+    <li>No advertising, no ad SDKs</li>
+    <li>No crash-reporting or telemetry sent to a third party</li>
+    <li>No selling or sharing of your data with anyone</li>
+    <li>No server operated by us that your data ever passes through</li>
+  </ul>
+
+  <h2>Data deletion</h2>
+  <p>Uninstalling Audex removes everything stored locally on your device. To remove the Drive-stored backup and trial-status files, revoke Audex's access from your <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Google Account's third-party access settings</a>, which deletes its entire <code>appDataFolder</code> space.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If this policy changes, the "Last updated" date above will change accordingly. Material changes will also be reflected in the app's own release notes.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy or your data: <a href="mailto:mazen.m.khaliel@gmail.com">mazen.m.khaliel@gmail.com</a></p>
+
+  <footer>
+    <a href="index.html">← Back to Audex</a>
+  </footer>
+</div>
+</body>
+</html>
