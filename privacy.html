@@ -63,7 +63,7 @@
   <p class="updated">Last updated: July 2026</p>
 
   <div class="summary">
-    <p><strong>The short version:</strong> Nearly everything Audex stores lives on your device or in your own Google Drive account. One small exception: a minimal server we operate verifies when your account first started a free trial, so it can't be reset by reinstalling. That server never sees your files, listening activity, or any personal details — see below. We don't sell, share, or analyze your data, and we don't show ads.</p>
+    <p><strong>The short version:</strong> Nearly everything Audex stores lives on your device or in your own Google Drive account. One small exception: we keep a trial-start date tied to your account so a free trial can't be reset by reinstalling. We don't sell, share, or analyze your data, and we don't show ads.</p>
   </div>
 
   <h2>What Audex accesses, and why</h2>
@@ -77,8 +77,8 @@
   <h3>Google Drive — app data folder</h3>
   <p>Audex uses Google's hidden, per-app <code>appDataFolder</code> space (invisible in your regular Drive, and inaccessible to any other app) for an optional, user-controlled backup of your local playback history, resume positions, and settings, so a phone change or reinstall doesn't lose them. This lives entirely inside your own Google account — we never see or receive it ourselves.</p>
 
-  <h3>Trial verification (anti-piracy)</h3>
-  <p>To keep the free trial honest without collecting anything about you, Audex sends the ID token Google already issues at sign-in to a small server we operate (Cloudflare Workers). That server verifies the token's signature directly against Google's own public keys, then stores exactly two things against your account's opaque Google ID: a single "first seen" timestamp, and (after purchase) a confirmation that you've unlocked the app. It never receives your email, name, files, listening activity, or any other personal data - just enough to know "this account has been trialing Audex since date X," so reinstalling or clearing app data can't reset the clock. This check runs once per install, right after sign-in.</p>
+  <h3>Trial verification</h3>
+  <p>So a free trial can't be reset by reinstalling, we keep a record of when your account first started using Audex on a small server we operate. That record contains only your account's identifier and a timestamp - never your email, files, or listening activity.</p>
 
   <h3>Local device storage</h3>
   <p>Audex stores your playback history, resume positions, settings, downloaded/synthesized audio, and any books you import directly on your device, using Android's standard local database and file storage. This never leaves your device unless you explicitly use the backup feature above.</p>
