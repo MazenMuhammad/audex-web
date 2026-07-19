@@ -63,7 +63,7 @@
   <p class="updated">Last updated: July 2026</p>
 
   <div class="summary">
-    <p><strong>The short version:</strong> Everything Audex stores lives on your device or in your own Google Drive account. We don't sell, share, or analyze your data, and we don't show ads.</p>
+    <p><strong>The short version:</strong> Nearly everything Audex stores lives on your device or in your own Google Drive account. One small exception: a minimal server we operate verifies when your account first started a free trial, so it can't be reset by reinstalling. That server never sees your files, listening activity, or any personal details — see below. We don't sell, share, or analyze your data, and we don't show ads.</p>
   </div>
 
   <h2>What Audex accesses, and why</h2>
@@ -75,12 +75,10 @@
   <p>If you choose to import an audio folder from Google Drive, Audex requests read-only access to browse and download the files you select. It never accesses any other file in your Drive, and never writes to your regular, visible Drive space.</p>
 
   <h3>Google Drive — app data folder</h3>
-  <p>Audex uses Google's hidden, per-app <code>appDataFolder</code> space (invisible in your regular Drive, and inaccessible to any other app) for two things:</p>
-  <ul>
-    <li><strong>Backup</strong> — an optional, user-controlled backup of your local playback history, resume positions, and settings, so a phone change or reinstall doesn't lose them.</li>
-    <li><strong>Trial status</strong> — a small file recording when your account first started using Audex, so a free trial can't be reset by reinstalling the app. It contains a single timestamp — nothing else about you or your usage.</li>
-  </ul>
-  <p>Both live entirely inside your own Google account. We never see or receive this data ourselves.</p>
+  <p>Audex uses Google's hidden, per-app <code>appDataFolder</code> space (invisible in your regular Drive, and inaccessible to any other app) for an optional, user-controlled backup of your local playback history, resume positions, and settings, so a phone change or reinstall doesn't lose them. This lives entirely inside your own Google account — we never see or receive it ourselves.</p>
+
+  <h3>Trial verification (anti-piracy)</h3>
+  <p>To keep the free trial honest without collecting anything about you, Audex sends the ID token Google already issues at sign-in to a small server we operate (Cloudflare Workers). That server verifies the token's signature directly against Google's own public keys, then stores exactly two things against your account's opaque Google ID: a single "first seen" timestamp, and (after purchase) a confirmation that you've unlocked the app. It never receives your email, name, files, listening activity, or any other personal data - just enough to know "this account has been trialing Audex since date X," so reinstalling or clearing app data can't reset the clock. This check runs once per install, right after sign-in.</p>
 
   <h3>Local device storage</h3>
   <p>Audex stores your playback history, resume positions, settings, downloaded/synthesized audio, and any books you import directly on your device, using Android's standard local database and file storage. This never leaves your device unless you explicitly use the backup feature above.</p>
@@ -100,7 +98,7 @@
   </ul>
 
   <h2>Data deletion</h2>
-  <p>Uninstalling Audex removes everything stored locally on your device. To remove the Drive-stored backup and trial-status files, revoke Audex's access from your <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Google Account's third-party access settings</a>, which deletes its entire <code>appDataFolder</code> space.</p>
+  <p>Uninstalling Audex removes everything stored locally on your device. To remove the Drive-stored backup, revoke Audex's access from your <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Google Account's third-party access settings</a>, which deletes its entire <code>appDataFolder</code> space. To remove the trial-verification record described above, contact us at the email below and we'll delete it.</p>
 
   <h2>Changes to this policy</h2>
   <p>If this policy changes, the "Last updated" date above will change accordingly. Material changes will also be reflected in the app's own release notes.</p>
