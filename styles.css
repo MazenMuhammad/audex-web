@@ -1,0 +1,592 @@
+/* ============================================================
+   Audex — shared design system
+   Tokens mirror the real app's ui/theme/*.kt values exactly
+   (coral-dark/coral-light, dark/light surfaces, status colors,
+   Sora type scale, spacing/radius scale).
+   ============================================================ */
+
+:root{
+  --coral:#FF5A36;
+  --coral-bright:#FF7A4D;
+  --on-accent:#0B0A0D;
+  --bg:#0B0A0D;
+  --surface:#151318;
+  --surface-variant:#1E1B23;
+  --surface-variant-2:#242028;
+  --on-bg:#F4F3F6;
+  --on-bg-muted:#9B98A4;
+  --outline:rgba(255,255,255,.08);
+  --outline-strong:rgba(255,255,255,.14);
+  --status-online:#3EB489;
+  --status-error:#E24C3A;
+  --scrim:rgba(0,0,0,.55);
+
+  --jewel-1:linear-gradient(135deg,#3A4A6B,#161C2C);
+  --jewel-2:linear-gradient(135deg,#5B3A52,#251521);
+  --jewel-3:linear-gradient(135deg,#6B2E3A,#2A1218);
+  --jewel-4:linear-gradient(135deg,#2E5B4F,#12281F);
+  --jewel-5:linear-gradient(135deg,#4A3A6B,#1C162C);
+  --jewel-6:linear-gradient(135deg,#6B5A2E,#2A2212);
+  --icon-gradient:linear-gradient(135deg,#FF6A44,#F2502C);
+
+  --font:"Sora",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+  --radius-card:12px;
+  --radius-field:15px;
+  --radius-featured:20px;
+  --radius-art:28px;
+  --radius-pill:999px;
+  --radius-elevated:16px;
+
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-7:32px;--space-8:48px;--space-9:64px;
+
+  --shadow-card:0 24px 48px -28px rgba(0,0,0,.55);
+  --shadow-accent:0 20px 40px -22px color-mix(in oklab, var(--coral) 55%, transparent);
+
+  --wrap:1120px;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme:light){
+  :root{
+    --coral:#F2502C;
+    --coral-bright:#FF7A4D;
+    --on-accent:#FFFFFF;
+    --bg:#F4F2EE;
+    --surface:#FFFFFF;
+    --surface-variant:#ECEAE5;
+    --surface-variant-2:#E3DFD8;
+    --on-bg:#16151B;
+    --on-bg-muted:#76747D;
+    --outline:rgba(0,0,0,.09);
+    --outline-strong:rgba(0,0,0,.16);
+    --status-online:#2C9160;
+    --status-error:#C13A2A;
+    --scrim:rgba(0,0,0,.30);
+    --shadow-card:0 24px 48px -28px rgba(20,15,10,.18);
+    color-scheme: light;
+  }
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--on-bg);
+  font-family:var(--font);
+  font-weight:500;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  transition:background .2s ease,color .2s ease;
+}
+img,svg{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+.wrap{ max-width:var(--wrap); margin:0 auto; padding:0 24px; }
+@media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+/* -------- type scale -------- */
+.eyebrow{
+  font:600 11px/1.3 var(--font); letter-spacing:.14em; text-transform:uppercase;
+  color:var(--coral); margin:0 0 var(--space-3);
+  display:flex; align-items:center; gap:8px;
+}
+.eyebrow::before{ content:""; width:16px; height:2px; border-radius:2px; background:var(--coral); }
+h1,h2,h3{ font-family:var(--font); color:var(--on-bg); margin:0; letter-spacing:-0.01em; }
+h1{ font-weight:800; }
+h2{ font-weight:800; font-size:clamp(26px,3.4vw,40px); letter-spacing:-0.02em; }
+h3{ font-weight:700; font-size:19px; }
+p{ color:var(--on-bg-muted); font-weight:500; margin:0; }
+.lede{ font-size:clamp(16px,1.6vw,19px); color:var(--on-bg-muted); max-width:56ch; }
+
+/* -------- reveal-on-scroll (JS-applied only; visible at rest) -------- */
+.reveal-pending{ opacity:0; transform:translateY(18px); transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1); }
+.reveal-pending.is-visible{ opacity:1; transform:translateY(0); }
+@media (prefers-reduced-motion:reduce){ .reveal-pending{ opacity:1 !important; transform:none !important; transition:none !important; } }
+
+/* ============================================================
+   Header
+   ============================================================ */
+.site-header{
+  position:sticky; top:0; z-index:80;
+  background:color-mix(in oklab, var(--bg) 82%, transparent);
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;
+  transition:border-color .25s ease, background .25s ease;
+}
+.site-header.is-scrolled{ border-bottom-color:var(--outline); }
+.site-header .wrap{ display:flex; align-items:center; justify-content:space-between; height:72px; gap:24px; }
+.brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:18px; letter-spacing:-0.01em; color:var(--on-bg); flex-shrink:0; }
+.brand .mark{ width:30px; height:30px; flex-shrink:0; border-radius:8px; }
+.brand .word{ display:inline-flex; }
+.brand .x{ color:var(--coral); }
+.main-nav{ display:flex; align-items:center; gap:2px; flex:1; justify-content:center; }
+.main-nav a{
+  font:600 14px var(--font); color:var(--on-bg-muted); padding:9px 14px; border-radius:var(--radius-pill);
+  transition:color .15s ease, background .15s ease; white-space:nowrap;
+}
+.main-nav a:hover{ color:var(--on-bg); background:var(--surface-variant); }
+.header-cta{ flex-shrink:0; display:flex; align-items:center; gap:14px; }
+.nav-toggle{ display:none; }
+.mobile-nav{ display:none; }
+.btn-text-short{ display:none; }
+
+@media (max-width:920px){
+  .main-nav{ display:none; }
+  .nav-toggle{
+    display:flex; align-items:center; justify-content:center; width:40px; height:40px;
+    border-radius:var(--radius-pill); border:1px solid var(--outline); background:transparent; color:var(--on-bg);
+    cursor:pointer;
+  }
+  .header-cta .btn-text-full{ display:none; }
+  .header-cta .btn-text-short{ display:inline; }
+  .mobile-nav{
+    position:fixed; inset:72px 0 0 0; z-index:70; background:var(--bg);
+    padding:32px 24px; overflow-y:auto;
+  }
+  .mobile-nav.is-open{ display:block; }
+  .mobile-nav a{
+    display:block; padding:16px 4px; font:700 20px var(--font); color:var(--on-bg);
+    border-bottom:1px solid var(--outline);
+  }
+}
+
+/* ============================================================
+   Buttons / chips / pills
+   ============================================================ */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font:700 15px var(--font); padding:13px 24px; border-radius:var(--radius-pill);
+  border:none; cursor:pointer; white-space:nowrap; transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+}
+.btn-primary{
+  background:linear-gradient(135deg, var(--coral), var(--coral-bright)); color:var(--on-accent);
+  box-shadow:var(--shadow-accent);
+}
+.btn-primary:hover{ transform:translateY(-1px); }
+.btn-ghost{
+  background:var(--surface-variant); color:var(--on-bg); border:1px solid var(--outline-strong);
+}
+.btn-ghost:hover{ border-color:var(--coral); color:var(--coral); }
+.btn-sm{ padding:9px 16px; font-size:13px; }
+.btn-block{ width:100%; }
+.cta-caption{ font:500 13px var(--font); color:var(--on-bg-muted); margin-top:10px; }
+
+.chip{
+  display:inline-flex; align-items:center; gap:7px; padding:9px 15px; border-radius:var(--radius-pill);
+  background:var(--surface-variant); color:var(--on-bg-muted); font:600 13px var(--font); border:1px solid var(--outline);
+}
+.chip.is-accent{ background:var(--coral); color:var(--on-accent); border-color:transparent; }
+.chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
+
+.pill-stat{
+  display:flex; flex-direction:column; align-items:flex-start; gap:2px;
+  padding:16px 20px; background:var(--surface); border:1px solid var(--outline); border-radius:var(--radius-elevated);
+}
+.pill-stat b{ font:800 22px var(--font); color:var(--on-bg); letter-spacing:-0.01em; }
+.pill-stat span{ font:600 12.5px var(--font); color:var(--on-bg-muted); }
+
+/* ============================================================
+   Section scaffolding
+   ============================================================ */
+section{ padding:var(--space-9) 0; }
+.section-head{ max-width:640px; margin-bottom:var(--space-7); }
+.section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+.two-col{ display:grid; grid-template-columns:1fr 1fr; gap:var(--space-8); align-items:center; }
+.two-col.reverse .col-visual{ order:2; }
+@media (max-width:900px){
+  .two-col{ grid-template-columns:1fr; gap:var(--space-6); }
+  .two-col.reverse .col-visual{ order:0; }
+}
+.feature-list{ list-style:none; margin:var(--space-5) 0 0; padding:0; display:flex; flex-direction:column; gap:14px; }
+.feature-list li{ display:flex; gap:12px; align-items:flex-start; font:500 15px/1.5 var(--font); color:var(--on-bg); }
+.feature-list .tick{
+  flex-shrink:0; width:20px; height:20px; border-radius:50%; margin-top:1px;
+  background:color-mix(in oklab, var(--coral) 16%, transparent);
+  display:flex; align-items:center; justify-content:center;
+}
+.feature-list .tick svg{ width:11px; height:11px; }
+
+.section-alt{ background:var(--surface); border-top:1px solid var(--outline); border-bottom:1px solid var(--outline); }
+
+.divider{ height:1px; background:var(--outline); border:none; margin:0; }
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero{ padding:var(--space-9) 0 var(--space-8); position:relative; overflow:hidden; }
+.hero::before{
+  content:""; position:absolute; inset:-20% -10% auto -10%; height:640px; z-index:-1;
+  background:radial-gradient(60% 60% at 30% 20%, color-mix(in oklab, var(--coral) 18%, transparent), transparent 70%);
+  pointer-events:none;
+}
+/* Text column widened from 1.05fr so the 4 device pills fit on one row without wrapping - the
+   phone mockup has its own fixed width (--pw:296px, centered via .hero-visual's flex centering),
+   so shrinking its column share doesn't shrink the phone itself, just its surrounding margin. */
+.hero-grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:var(--space-8); align-items:center; }
+@media (max-width:960px){ .hero-grid{ grid-template-columns:1fr; } .hero-visual{ order:-1; } }
+.hero h1{ font-size:clamp(34px,5vw,58px); line-height:1.06; margin:0 0 18px; }
+.hero .lede{ margin-bottom:var(--space-6); }
+.hero-ctas{ display:flex; flex-direction:column; align-items:flex-start; gap:2px; }
+.hero-ctas .btn-row{ display:flex; flex-wrap:wrap; gap:12px; }
+
+.stat-strip{ display:flex; flex-wrap:wrap; gap:12px; margin-top:var(--space-8); }
+.stat-strip .pill-stat{ flex:1 1 200px; }
+
+/* ============================================================
+   Phone-frame mockups (recreations of real app screens)
+   ============================================================ */
+.phone{
+  --pw:296px;
+  width:var(--pw); margin:0 auto; border-radius:40px; padding:12px;
+  background:linear-gradient(160deg,#232127,#0d0c10);
+  box-shadow:var(--shadow-card), inset 0 0 0 1px rgba(255,255,255,.06);
+  position:relative;
+  z-index:1;
+}
+.phone-notch{ position:absolute; top:12px; left:50%; transform:translateX(-50%); width:90px; height:22px; background:#0d0c10; border-radius:0 0 14px 14px; z-index:2; }
+.phone-screen{
+  background:#0B0A0D; border-radius:28px; overflow:hidden; position:relative;
+  aspect-ratio:9/19.2; padding:30px 16px 18px; display:flex; flex-direction:column;
+  font-family:var(--font);
+}
+.phone-statusbar{ position:absolute; top:12px; left:20px; right:20px; display:flex; justify-content:space-between; font:600 11px var(--font); color:#F4F3F6; opacity:.85; }
+
+.mock-topbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; color:#F4F3F6; }
+.mock-topbar .chev{ font-size:18px; opacity:.8; }
+.mock-topbar .label{ text-align:center; }
+.mock-topbar .label .ov{ font:600 8.5px var(--font); letter-spacing:.12em; text-transform:uppercase; color:#9B98A4; }
+.mock-topbar .label .sv{ font:600 11px var(--font); color:#F4F3F6; }
+
+.mock-art{
+  width:100%; aspect-ratio:1; border-radius:var(--radius-art); margin:6px 0 16px; position:relative; overflow:hidden;
+  border:1px solid rgba(255,255,255,.08); box-shadow:0 20px 30px -18px rgba(0,0,0,.6);
+}
+.mock-art img{ width:100%; height:100%; object-fit:cover; display:block; }
+.mock-eq{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:3px; }
+.mock-eq::before{ content:""; position:absolute; inset:0; background:radial-gradient(circle, rgba(0,0,0,.42) 0%, rgba(0,0,0,0) 62%); }
+.mock-eq span{ position:relative; z-index:1; }
+.mock-eq span{ width:4px; height:20px; background:#fff; border-radius:2px; transform-origin:bottom; animation:mockeq 1s ease-in-out infinite alternate; }
+.mock-eq span:nth-child(2){ animation-duration:.72s; animation-delay:.09s; }
+.mock-eq span:nth-child(3){ animation-duration:.86s; animation-delay:.18s; }
+@keyframes mockeq{ from{ transform:scaleY(.35);} to{ transform:scaleY(1);} }
+@media (prefers-reduced-motion:reduce){ .mock-eq span{ animation:none; transform:scaleY(.75); } }
+
+.mock-title{ font:700 17px var(--font); color:#F4F3F6; margin:0 0 2px; letter-spacing:-0.01em; }
+.mock-sub{ font:600 12px var(--font); color:#9B98A4; margin:0 0 14px; }
+
+.mock-chips{ display:flex; gap:6px; overflow:hidden; margin-bottom:16px; }
+.mock-chips span{ flex-shrink:0; background:#1E1B23; color:#9B98A4; font:600 10px var(--font); padding:7px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.08); }
+
+.mock-slider{ height:4px; border-radius:999px; background:#1E1B23; margin-bottom:6px; }
+.mock-slider i{ display:block; height:100%; width:34%; border-radius:999px; background:var(--coral); }
+.mock-times{ display:flex; justify-content:space-between; font:500 10px var(--font); color:#9B98A4; margin-bottom:18px; }
+
+.mock-transport{ display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding:0 4px; }
+.mock-transport .glyph{ font-size:19px; color:#9B98A4; }
+.mock-transport .play{
+  width:56px; height:56px; border-radius:50%; background:var(--coral); display:flex; align-items:center; justify-content:center;
+  box-shadow:0 10px 20px -8px color-mix(in oklab, var(--coral) 70%, transparent);
+}
+.mock-transport .play svg{ width:20px; height:20px; }
+
+.mock-header-row{ display:flex; align-items:center; gap:10px; color:#F4F3F6; margin-bottom:14px; }
+.mock-header-row .chev{ font-size:16px; opacity:.8; }
+.mock-header-row .h{ font:800 19px var(--font); letter-spacing:-0.01em; }
+
+.mock-procard{
+  border-radius:16px; padding:14px; margin-bottom:16px;
+  border:1px solid color-mix(in oklab, var(--coral) 35%, transparent);
+  background:linear-gradient(135deg, color-mix(in oklab, var(--coral) 24%, transparent), #151318);
+}
+.mock-procard-top{ display:flex; align-items:center; gap:8px; margin-bottom:9px; }
+.mock-procard-top b{ font:700 16px var(--font); color:#F4F3F6; white-space:nowrap; letter-spacing:0; }
+.mock-procard-top span{ background:var(--coral); color:#0B0A0D; font:700 9px var(--font); padding:3px 9px; border-radius:999px; letter-spacing:.04em; }
+.mock-procard-bar{ height:4px; border-radius:999px; background:#1E1B23; margin-bottom:8px; }
+.mock-procard-bar i{ display:block; height:100%; width:60%; border-radius:999px; background:var(--coral); }
+.mock-procard-bottom{ display:flex; justify-content:space-between; font:600 12px var(--font); }
+.mock-procard-bottom .days{ color:#9B98A4; }
+.mock-procard-bottom .unlock{ color:var(--coral); }
+
+.mock-overline{ font:600 9px var(--font); letter-spacing:.1em; text-transform:uppercase; color:#9B98A4; margin:0 0 8px; }
+.mock-server-card{ background:#151318; border-radius:14px; overflow:hidden; margin-bottom:14px; }
+.mock-server-row{ display:flex; align-items:center; gap:10px; padding:10px 12px; border-bottom:1px solid rgba(255,255,255,.06); }
+.mock-server-row:last-child{ border-bottom:none; }
+.mock-server-avatar{ width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font:700 12px var(--font); flex-shrink:0; }
+.mock-server-info{ flex:1; min-width:0; }
+.mock-server-info b{ display:block; font:600 13px var(--font); color:#F4F3F6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.mock-server-status{ display:flex; align-items:center; gap:5px; }
+.mock-server-status i{ width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.mock-server-status span{ font:600 9.5px var(--font); color:#9B98A4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.mock-server-action{ flex-shrink:0; font:600 10px var(--font); color:var(--coral); border:1px solid rgba(255,255,255,.14); border-radius:999px; padding:5px 10px; }
+.mock-add-row{ padding:11px 12px; color:var(--coral); font:600 12px var(--font); border-top:1px dashed rgba(255,255,255,.12); }
+
+.mock-pill-row{ display:flex; gap:6px; margin-bottom:12px; overflow:hidden; }
+.mock-pill-row span{ flex-shrink:0; display:inline-flex; align-items:center; gap:6px; padding:8px 12px; border-radius:999px; font:600 11.5px var(--font); background:transparent; color:#9B98A4; }
+.mock-pill-row span.active{ background:var(--coral); color:#0B0A0D; }
+.mock-pill-row .tile{ width:16px; height:16px; border-radius:5px; }
+.mock-search{ background:#1E1B23; border-radius:15px; padding:9px 12px; font:500 12px var(--font); color:#9B98A4; margin-bottom:12px; }
+.mock-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.mock-card{ border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.08); }
+.mock-card .art{ aspect-ratio:1; position:relative; display:flex; align-items:center; justify-content:center; }
+.mock-card .art img{ width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0; }
+.mock-card .art .initial{ position:relative; z-index:1; font:800 34px var(--font); color:rgba(255,255,255,.5); }
+.mock-card .art .dur{ position:absolute; right:4px; bottom:4px; background:rgba(0,0,0,.72); color:#fff; font:600 8.5px var(--font); border-radius:4px; padding:2px 5px; }
+.mock-card .meta{ padding:7px 8px; background:#151318; }
+.mock-card .meta b{ display:block; font:600 11px var(--font); color:#F4F3F6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.mock-card .meta span{ font:500 9.5px var(--font); color:#9B98A4; }
+
+.mock-transcript{ display:flex; flex-direction:column; gap:9px; margin-bottom:16px; }
+.mock-transcript p{ font:500 12.5px/1.55 var(--font); color:#9B98A4; margin:0; padding:2px 0; }
+.mock-transcript p.active{ color:#0B0A0D; background:var(--coral); border-radius:6px; padding:3px 6px; margin:0 -6px; }
+
+.mock-eq-curve{ position:relative; height:96px; margin:4px 0 12px; }
+.mock-eq-curve svg{ width:100%; height:100%; overflow:visible; }
+.mock-preset-row{ display:flex; gap:6px; overflow:hidden; }
+.mock-preset-row span{ flex-shrink:0; background:#1E1B23; color:#9B98A4; font:600 10px var(--font); padding:6px 10px; border-radius:999px; }
+.mock-preset-row span.active{ background:var(--coral); color:#0B0A0D; }
+
+.hero-visual{ display:flex; align-items:center; justify-content:center; }
+
+/* Device-reach pills - a static row in the hero text column (right after the lede, above the
+   CTAs), not floating over the phone mockup like the earlier design - reads as one clear list
+   of "everywhere you already are" instead of badges scattered around an unrelated visual. */
+.hero-places{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+.place-pill{
+  display:flex; align-items:center; gap:8px; padding:9px 13px 9px 9px;
+  background:var(--surface); border:1px solid var(--outline); border-radius:var(--radius-pill); box-shadow:var(--shadow-card);
+  font:700 12.5px var(--font); color:var(--on-bg); white-space:nowrap;
+}
+.place-pill .ic{ width:26px; height:26px; border-radius:50%; background:var(--surface-variant); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.place-pill .ic svg{ width:14px; height:14px; color:var(--coral); }
+
+/* ============================================================
+   Server / backend chip grid
+   ============================================================ */
+/* 3 columns x 2 rows - 6 backends divide evenly into 3 (or 2, on mobile below), so every row is
+   always full and the grid reads as centered/balanced. A 4-column layout left an orphaned,
+   left-hugging 2-item last row (Plex/Kodi) that looked off-center - never pick a column count
+   that doesn't evenly divide the item count for a grid like this. */
+.backend-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:var(--space-6); }
+@media (max-width:480px){ .backend-grid{ grid-template-columns:repeat(2,1fr); } }
+.backend-item{
+  display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center;
+  padding:18px 10px; background:var(--surface); border:1px solid var(--outline); border-radius:var(--radius-elevated);
+  /* A grid item's default min-width:auto resolves to its own content's min-content size, which can
+     override a nominally-equal 1fr track share whenever one label (e.g. "Subsonic / Navidrome"
+     wrapping to two lines) needs more room than the others - min-width:0 lets every column actually
+     divide evenly, the same nested-min-width bug this app's own Android client hit for its logo chips. */
+  min-width:0;
+}
+.backend-item .ic{ width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#fff; flex-shrink:0; }
+.backend-item .ic svg{ width:20px; height:20px; }
+/* Scoped to .label, not a bare "span" - a bare-span selector also matched .logo-chip (itself a
+   span), and since ".backend-item span" (0,1,1) outranks ".logo-chip"'s own width:40px (0,1,0),
+   it was stretching every icon's white pill to the item's full column width instead of a fixed
+   40px chip - confirmed live via screenshot. */
+.backend-item .label{ font:600 12.5px var(--font); color:var(--on-bg); overflow-wrap:break-word; hyphens:auto; width:100%; }
+
+/* Real third-party logos sit on a plain white chip regardless of site theme - their own brand
+   colors are fixed and shouldn't be tinted/recolored to match ours (several brand guidelines
+   explicitly prohibit recoloring a logo). */
+.logo-chip{
+  width:40px; height:40px; min-width:0; min-height:0; border-radius:12px; background:#fff; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; padding:7px; box-sizing:border-box;
+  box-shadow:0 1px 3px rgba(0,0,0,.25);
+}
+/* min-width/height:0 is load-bearing: an <img> flex item defaults to min-width:auto (its own
+   intrinsic size), which overrides width:100% and lets a real logo (e.g. a 192px PNG) blow past
+   this 30-40px chip - a classic flexbox-replaced-element bug, confirmed live. */
+.logo-chip img{ width:100%; height:100%; min-width:0; min-height:0; object-fit:contain; }
+.logo-chip.sm{ width:30px; height:30px; border-radius:8px; padding:5px; }
+
+/* ============================================================
+   "Everywhere" device grid
+   ============================================================ */
+.device-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-top:var(--space-7); }
+@media (max-width:920px){ .device-grid{ grid-template-columns:repeat(3,1fr); } }
+@media (max-width:560px){ .device-grid{ grid-template-columns:repeat(2,1fr); } }
+.device-card{ background:var(--surface); border:1px solid var(--outline); border-radius:var(--radius-elevated); padding:22px 18px; display:flex; flex-direction:column; gap:12px; }
+.device-card .ic{ width:42px; height:42px; border-radius:12px; background:color-mix(in oklab, var(--coral) 16%, transparent); display:flex; align-items:center; justify-content:center; }
+.device-card .ic svg{ width:22px; height:22px; color:var(--coral); }
+.device-card h3{ font-size:15.5px; }
+.device-card p{ font-size:13.5px; line-height:1.5; }
+
+/* ============================================================
+   Privacy feature strip (checklist)
+   ============================================================ */
+.priv-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:var(--space-6); }
+@media (max-width:700px){ .priv-grid{ grid-template-columns:1fr; } }
+.priv-item{ display:flex; gap:14px; align-items:flex-start; padding:18px; background:var(--surface); border:1px solid var(--outline); border-radius:var(--radius-elevated); }
+.priv-item .ic{ flex-shrink:0; width:34px; height:34px; border-radius:10px; background:color-mix(in oklab, var(--status-online) 16%, transparent); display:flex; align-items:center; justify-content:center; }
+.priv-item .ic svg{ width:18px; height:18px; color:var(--status-online); }
+.priv-item h3{ font-size:15px; margin-bottom:3px; }
+.priv-item p{ font-size:13.5px; line-height:1.5; }
+
+/* ============================================================
+   Pricing
+   ============================================================ */
+.pricing-card{
+  max-width:520px; margin:0 auto; padding:var(--space-7); text-align:center;
+  background:linear-gradient(160deg, color-mix(in oklab, var(--coral) 14%, var(--surface)), var(--surface));
+  border:1px solid color-mix(in oklab, var(--coral) 30%, transparent); border-radius:var(--radius-featured);
+}
+.pricing-trial-pill{ display:inline-flex; align-items:center; gap:6px; background:var(--coral); color:var(--on-accent); font:700 11px var(--font); letter-spacing:.06em; text-transform:uppercase; padding:5px 14px; border-radius:999px; margin-bottom:20px; }
+.price-figure{ font:800 64px var(--font); letter-spacing:-0.03em; color:var(--on-bg); line-height:1; }
+.price-figure sup{ font-size:26px; top:-24px; }
+.price-note{ font:600 14px var(--font); color:var(--on-bg-muted); margin:8px 0 26px; }
+.pricing-list{ list-style:none; margin:0 0 28px; padding:0; text-align:left; display:flex; flex-direction:column; gap:12px; }
+.pricing-list li{ display:flex; gap:10px; font:500 14.5px var(--font); color:var(--on-bg); }
+
+/* ============================================================
+   FAQ (native details/summary — accessible, no JS)
+   ============================================================ */
+.faq-list{ display:flex; flex-direction:column; gap:10px; margin-top:var(--space-6); }
+.faq-item{ background:var(--surface); border:1px solid var(--outline); border-radius:var(--radius-elevated); overflow:hidden; }
+.faq-item summary{
+  list-style:none; cursor:pointer; padding:18px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px;
+  font:700 15px var(--font); color:var(--on-bg);
+}
+.faq-item summary::-webkit-details-marker{ display:none; }
+.faq-item summary .plus{ flex-shrink:0; width:22px; height:22px; border-radius:50%; background:var(--surface-variant); position:relative; }
+.faq-item summary .plus::before,.faq-item summary .plus::after{ content:""; position:absolute; background:var(--on-bg-muted); top:50%; left:50%; transform:translate(-50%,-50%); }
+.faq-item summary .plus::before{ width:9px; height:2px; }
+.faq-item summary .plus::after{ width:2px; height:9px; transition:transform .2s ease; }
+.faq-item[open] summary .plus::after{ transform:translate(-50%,-50%) rotate(90deg) scale(0); }
+.faq-item .faq-a{ padding:0 20px 20px; font:500 14.5px/1.6 var(--font); color:var(--on-bg-muted); max-width:70ch; }
+
+/* Numbered step-by-step guide inside a FAQ answer (e.g. "generate your own Google Cloud API key") -
+   scoped to .faq-steps rather than bare ol/li, since this page has no generic list styling and a raw
+   <ol> would fall back to unstyled browser defaults, out of place next to the rest of this design. */
+.faq-steps{ list-style:none; padding:0; margin:14px 0; counter-reset:step; }
+.faq-steps li{
+  position:relative; counter-increment:step; padding:14px 16px 14px 50px; margin:8px 0;
+  background:var(--surface-variant); border:1px solid var(--outline); border-radius:12px;
+}
+.faq-steps li::before{
+  content:counter(step); position:absolute; left:14px; top:14px; width:22px; height:22px;
+  border-radius:50%; background:var(--coral); color:#fff; font:700 12px var(--font);
+  display:flex; align-items:center; justify-content:center;
+}
+.faq-steps b{ display:block; font-size:14.5px; color:var(--on-bg); }
+.faq-steps p{ margin:4px 0 0; font-size:13.5px; color:var(--on-bg-muted); }
+.faq-steps .step-link{ display:inline-block; margin-top:6px; font:600 13px var(--font); color:var(--coral); }
+.faq-steps .step-link::after{ content:" →"; }
+.faq-note{
+  background:var(--surface-variant); border:1px solid var(--outline); border-left:3px solid var(--coral);
+  border-radius:10px; padding:14px 18px; margin:16px 0 4px; font-size:13.5px; color:var(--on-bg-muted);
+}
+.faq-note b{ color:var(--on-bg); }
+
+/* ============================================================
+   Final CTA band
+   ============================================================ */
+.cta-band{ text-align:center; padding:var(--space-9) 0; }
+.cta-band h2{ margin-bottom:14px; }
+.cta-band .lede{ margin:0 auto 28px; }
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.site-footer{ border-top:1px solid var(--outline); padding:var(--space-8) 0 var(--space-6); }
+.footer-top{ display:grid; grid-template-columns:1.4fr repeat(3,1fr); gap:var(--space-6); margin-bottom:var(--space-7); }
+@media (max-width:760px){ .footer-top{ grid-template-columns:1fr 1fr; } }
+.footer-brand p{ margin-top:12px; max-width:32ch; font-size:13.5px; line-height:1.6; }
+.footer-col h4{ font:600 12px var(--font); letter-spacing:.08em; text-transform:uppercase; color:var(--on-bg-muted); margin:0 0 14px; }
+.footer-col ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+.footer-col a{ font:500 14px var(--font); color:var(--on-bg); }
+.footer-col a:hover{ color:var(--coral); }
+.footer-bottom{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-top:var(--space-6); border-top:1px solid var(--outline); font:500 13px var(--font); color:var(--on-bg-muted); }
+.footer-bottom a{ color:var(--on-bg-muted); }
+.footer-bottom a:hover{ color:var(--coral); }
+
+/* ============================================================
+   Help center layout
+   ============================================================ */
+.help-shell{ display:grid; grid-template-columns:240px 1fr; gap:var(--space-8); padding:var(--space-8) 0 var(--space-9); align-items:start; }
+@media (max-width:860px){ .help-shell{ grid-template-columns:1fr; } }
+.help-nav{ position:sticky; top:96px; display:flex; flex-direction:column; gap:2px; }
+@media (max-width:860px){ .help-nav{ position:static; flex-direction:row; flex-wrap:wrap; gap:8px; margin-bottom:8px; } }
+.help-nav a{ font:600 13.5px var(--font); color:var(--on-bg-muted); padding:9px 12px; border-radius:10px; }
+.help-nav a:hover{ color:var(--on-bg); background:var(--surface-variant); }
+@media (max-width:860px){ .help-nav a{ background:var(--surface); border:1px solid var(--outline); border-radius:999px; } }
+/* padding:0 overrides the generic "section{ padding:var(--space-9) 0 }" rule (meant for the
+   homepage's big top-level sections) - the same oversized-gap bug fixed on .legal-section above. */
+.help-category{ margin-bottom:var(--space-8); padding:0; scroll-margin-top:96px; }
+.help-category h2{ font-size:23px; margin-bottom:6px; }
+.help-category .cat-note{ font-size:14.5px; margin-bottom:20px; max-width:60ch; }
+.help-search-hint{ background:var(--surface); border:1px solid var(--outline); border-radius:var(--radius-elevated); padding:18px 20px; margin-bottom:var(--space-7); font-size:14px; }
+.help-search-hint a{ color:var(--coral); font-weight:700; }
+
+/* ============================================================
+   Legal pages (Privacy Policy / Delete Account)
+   ============================================================ */
+.legal-shell{ max-width:760px; margin:0 auto; padding:var(--space-8) 0 var(--space-9); }
+.legal-crumb{ display:flex; align-items:center; gap:8px; font:500 13.5px var(--font); color:var(--on-bg-muted); margin-bottom:var(--space-6); }
+.legal-crumb a{ display:flex; align-items:center; gap:7px; font-weight:700; color:var(--on-bg); }
+.legal-crumb .mark{ width:20px; height:20px; border-radius:6px; }
+.legal-meta{ display:flex; flex-wrap:wrap; gap:8px 18px; color:var(--on-bg-muted); font-size:13.5px; margin:10px 0 22px; }
+.legal-meta b{ color:var(--on-bg); font-weight:600; }
+.legal-summary{
+  background:var(--surface); border:1px solid var(--outline); border-left:3px solid var(--coral); border-radius:12px;
+  padding:20px 22px; margin-bottom:var(--space-7);
+}
+.legal-summary h2{ font:600 12px var(--font); letter-spacing:.08em; text-transform:uppercase; color:var(--on-bg-muted); margin:0 0 10px; }
+.legal-summary ul{ margin:0; padding-left:20px; }
+.legal-summary li{ margin:6px 0; color:var(--on-bg); font-size:14.5px; }
+.legal-toc{ background:var(--surface); border:1px solid var(--outline); border-radius:12px; padding:18px 22px; margin-bottom:var(--space-8); }
+.legal-toc h2{ font:600 12px var(--font); letter-spacing:.08em; text-transform:uppercase; color:var(--on-bg-muted); margin:0 0 10px; }
+.legal-toc ol{ margin:0; padding-left:20px; columns:2; column-gap:24px; }
+.legal-toc li{ break-inside:avoid; margin:5px 0; font-size:14px; }
+.legal-toc a{ color:var(--on-bg); }
+.legal-toc a:hover{ color:var(--coral); }
+@media (max-width:520px){ .legal-toc ol{ columns:1; } }
+/* padding:0 overrides the generic "section{ padding:var(--space-9) 0 }" rule above - that rule is
+   meant for the homepage's big top-level page sections (#servers, hero, etc.), but this page reuses
+   the same bare <section> tag for each numbered subsection, which was silently stacking an extra
+   64px of top+bottom padding on top of this rule's own intentional 32px margin-top - the real cause
+   of the oversized gaps between sections. */
+.legal-section{ margin-top:var(--space-7); padding:0; scroll-margin-top:24px; }
+.legal-section h2{ font-size:19px; letter-spacing:-0.01em; margin:0 0 4px; padding-bottom:12px; border-bottom:1px solid var(--outline); display:flex; align-items:baseline; gap:10px; }
+.legal-section h2 .num{ color:var(--coral); font-variant-numeric:tabular-nums; font-size:15px; font-weight:700; }
+.legal-section h3{ font-size:15.5px; margin:22px 0 8px; }
+.legal-section p{ color:var(--on-bg); font-size:15.5px; margin:14px 0; line-height:1.65; }
+.legal-section ul{ padding-left:20px; margin:14px 0; }
+.legal-section li{ color:var(--on-bg); font-size:15.5px; margin:6px 0; line-height:1.6; }
+.legal-section a{ color:var(--coral); font-weight:600; }
+.legal-field-list{ list-style:none; padding:0; margin:16px 0; }
+.legal-field-list li{ padding:14px 16px; background:var(--surface); border:1px solid var(--outline); border-radius:10px; margin:10px 0; }
+.legal-field-list b{ display:block; font-size:14.5px; margin-bottom:3px; color:var(--on-bg); }
+.legal-field-list span{ color:var(--on-bg-muted); font-size:14.5px; }
+.legal-back-top{ display:inline-block; margin-top:6px; font-size:13.5px; color:var(--on-bg-muted); }
+.legal-back-top:hover{ color:var(--coral); }
+
+/* -------- delete-account specific -------- */
+.delete-card{ background:var(--surface); border:1px solid var(--outline); border-radius:var(--radius-featured); padding:28px 26px; margin-bottom:var(--space-6); }
+.delete-card h2{ font-size:15px; margin:0 0 14px; }
+.scope-list{ list-style:none; padding:0; margin:0 0 24px; }
+.scope-list li{ display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--outline); font-size:14.5px; }
+.scope-list li:last-child{ border-bottom:none; }
+.scope-list .mark{ flex-shrink:0; width:20px; text-align:center; font-weight:700; }
+.scope-list .mark.yes{ color:var(--status-online); }
+.scope-list .mark.no{ color:var(--on-bg-muted); }
+.scope-list b{ display:block; color:var(--on-bg); }
+.scope-list span.d{ color:var(--on-bg-muted); font-size:13.5px; }
+#g_id_signin_container{ display:flex; justify-content:center; min-height:44px; }
+/* The base p{ margin:0 } reset left zero space between the confirm paragraph above and whichever
+   state block (sign-in/pending/ok/err) is active right below it - margin-top here (not on the
+   paragraph itself) covers all four states consistently, since only one is ever visible at once. */
+.del-state{ display:none; margin-top:var(--space-6); }
+.del-state.active{ display:block; }
+.result-box{ border-radius:10px; padding:16px 18px; font-size:14.5px; margin-top:4px; }
+.result-box.ok{ background:color-mix(in oklab, var(--status-online) 16%, var(--surface)); color:var(--status-online); border:1px solid var(--status-online); }
+.result-box.err{ background:color-mix(in oklab, var(--status-error) 16%, var(--surface)); color:var(--status-error); border:1px solid var(--status-error); }
+.result-box.pending{ background:var(--surface-variant); color:var(--on-bg-muted); border:1px solid var(--outline); }
+.result-box.warn{ background:var(--surface-variant); color:var(--on-bg); border:1px solid var(--status-error); }
+.result-box.warn p:first-child{ font-weight:700; }
+.del-confirm-actions{ display:flex; gap:10px; justify-content:center; margin-top:16px; }
+.btn-danger{ background:var(--status-error); color:#fff; }
+.btn-danger:hover{ filter:brightness(1.08); }
+.del-back-link{ display:inline-block; margin-top:10px; font-size:14px; color:var(--on-bg-muted); }
+.del-back-link:hover{ color:var(--coral); }

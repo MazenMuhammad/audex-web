@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Help Center — Audex</title>
+<meta name="description" content="How Audex's media servers, local files, books, radio, sound, and multi-device features actually work — setup help and answers, not just marketing copy.">
+<link rel="icon" type="image/svg+xml" href="/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css?v=19">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <img class="mark" src="/icon.svg" alt="">
+      <span class="word">Aude<span class="x">x</span></span>
+    </a>
+    <nav class="main-nav">
+      <a href="/#servers">Servers</a>
+      <a href="/#files">Files &amp; Books</a>
+      <a href="/#sound">Sound</a>
+      <a href="/#everywhere">Everywhere</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/help/">Help</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.audex"><span class="btn-text-full">Get Audex</span><span class="btn-text-short">Get</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/#servers">Servers</a>
+  <a href="/#files">Files &amp; Books</a>
+  <a href="/#sound">Sound</a>
+  <a href="/#everywhere">Everywhere</a>
+  <a href="/#pricing">Pricing</a>
+  <a href="/help/">Help Center</a>
+  <a href="/privacy-policy/">Privacy Policy</a>
+</nav>
+
+<main>
+  <div class="wrap" style="padding-top:48px">
+    <p class="eyebrow">Help Center</p>
+    <h1 style="font-size:clamp(28px,4vw,42px)">How Audex actually works</h1>
+    <p class="lede" style="margin-top:12px">Setup help and real answers, organized by what you're trying to do — not a rehash of the marketing page.</p>
+  </div>
+
+  <div class="wrap help-shell">
+    <nav class="help-nav" aria-label="Help categories">
+      <a href="#getting-started">Getting Started</a>
+      <a href="#media-servers">Media Servers</a>
+      <a href="#files-cloud">Files &amp; Cloud Storage</a>
+      <a href="#books-tts">Books &amp; Text-to-Speech</a>
+      <a href="#radio">Internet Radio</a>
+      <a href="#sound-playback">Sound &amp; Playback</a>
+      <a href="#everywhere">Everywhere You Are</a>
+      <a href="#account">Account, Trial &amp; Purchase</a>
+      <a href="#privacy-data">Privacy &amp; Data</a>
+    </nav>
+
+    <div>
+      <div class="help-search-hint">
+        Can't find what you're looking for? <a href="mailto:support@shafralabs.com">Email support@shafralabs.com</a> — a real person reads every message.
+      </div>
+
+      <section class="help-category" id="getting-started">
+        <h2>Getting Started</h2>
+        <p class="cat-note">What Audex is, and the fastest way to get something playing.</p>
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>What is Audex?<span class="plus"></span></summary>
+            <div class="faq-a">A self-hosted-first audio and audiobook player for Android. It doesn't host or stream any content of its own — it plays from a media server you already run, files already on your device or in your own cloud storage, internet radio, and your own PDFs and EPUBs read aloud. Nothing to re-upload, nothing rented back to you.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Do I need a media server to use it?<span class="plus"></span></summary>
+            <div class="faq-a">No. Local files, a Google Drive/Dropbox/OneDrive folder, internet radio, and your own books all work with nothing else set up. A media server is one more source you can add, not a requirement to get started.</div>
+          </details>
+          <details class="faq-item">
+            <summary>What's the free trial, exactly?<span class="plus"></span></summary>
+            <div class="faq-a">30 days with every feature unlocked, starting the first time you open the app, tied to your Google account rather than the install — reinstalling doesn't reset it. After the trial, a single $5 payment through Google Play unlocks Audex for good. There's no subscription at any point.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Where do I add my first source?<span class="plus"></span></summary>
+            <div class="faq-a">From Settings: "Media servers" to connect a server, "Local files" to add a folder from your device or a cloud account, or "Books" to import a PDF or EPUB. Each source shows up as its own tab in your Library once added.</div>
+          </details>
+        </div>
+      </section>
+
+      <section class="help-category" id="media-servers">
+        <h2>Media Servers</h2>
+        <p class="cat-note">Connecting Jellyfin, Plex, Emby, Subsonic, Audiobookshelf, or Kodi.</p>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Which servers does Audex support?<span class="plus"></span></summary>
+            <div class="faq-a">Jellyfin, Emby, Plex, Subsonic and its compatible siblings (Navidrome, OpenSubsonic, Airsonic), Audiobookshelf, and Kodi.</div>
+          </details>
+          <details class="faq-item">
+            <summary>How do I connect a server?<span class="plus"></span></summary>
+            <div class="faq-a">Settings → Media servers → Add a server. Pick the type, enter its address (and username/password if it needs one), and Audex tests the connection before saving — so you know it worked before you leave the screen.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Can I connect more than one server?<span class="plus"></span></summary>
+            <div class="faq-a">Yes, each with its own nickname. Switch between them from the same source picker you use for Local Files and Books.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Do movies and TV shows work too, or just music?<span class="plus"></span></summary>
+            <div class="faq-a">On Jellyfin, Emby, Plex, and Kodi, Audex can browse and play video the same way it plays audio. Subsonic-family servers and Audiobookshelf are audio-only, matching what those platforms themselves serve.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Do I have to type my password in every time?<span class="plus"></span></summary>
+            <div class="faq-a">No — credentials are saved encrypted on your device the first time you connect, so you're not re-entering them on every launch.</div>
+          </details>
+          <details class="faq-item">
+            <summary>My server shows "offline" — what should I check?<span class="plus"></span></summary>
+            <div class="faq-a">First, confirm the server itself is actually reachable from wherever your phone currently is — the same Wi-Fi network at home, or a VPN/reverse proxy if you're away. Then double-check that the address and port saved in Audex still match what the server is really listening on; a server restart or a router change can shift this.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Can I download server content for offline listening?<span class="plus"></span></summary>
+            <div class="faq-a">Yes, from any server — download a track, an album, or a whole playlist so a spotty connection doesn't interrupt a commute.</div>
+          </details>
+        </div>
+      </section>
+
+      <section class="help-category" id="files-cloud">
+        <h2>Files &amp; Cloud Storage</h2>
+        <p class="cat-note">Playing what's already on your device or in a cloud account.</p>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What local folders can I add?<span class="plus"></span></summary>
+            <div class="faq-a">Any folder on your device via the system file picker, plus one-tap shortcuts for WhatsApp's and WhatsApp Business's voice-note folders and your phone's own voice recorder folder.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Which cloud services can I connect for files?<span class="plus"></span></summary>
+            <div class="faq-a">Google Drive, Dropbox, OneDrive, a WebDAV address, or an SMB network share.</div>
+          </details>
+          <details class="faq-item">
+            <summary>How does Audex organize local files?<span class="plus"></span></summary>
+            <div class="faq-a">Automatically, into Albums, Artists, and Folders, based on each file's own tags and its location on disk — there's no manual tagging step.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Can I download a cloud folder so it works offline?<span class="plus"></span></summary>
+            <div class="faq-a">Yes — a connected cloud folder downloads once to your device, then plays exactly like a local file with no live connection needed afterward.</div>
+          </details>
+        </div>
+      </section>
+
+      <section class="help-category" id="books-tts">
+        <h2>Books &amp; Text-to-Speech</h2>
+        <p class="cat-note">Turning a PDF or EPUB into something you can listen to.</p>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What book formats does Audex read?<span class="plus"></span></summary>
+            <div class="faq-a">PDF and EPUB.</div>
+          </details>
+          <details class="faq-item">
+            <summary>How does chapter splitting work?<span class="plus"></span></summary>
+            <div class="faq-a">Audex reads the book's own table of contents where one exists, rather than guessing chapter breaks from a fixed page count — so chapters in the app match the real chapters in the book.</div>
+          </details>
+          <details class="faq-item">
+            <summary>What voices can read my books?<span class="plus"></span></summary>
+            <div class="faq-a">A fully offline neural voice (nothing sent anywhere once it's downloaded), your phone's own built-in text-to-speech as a no-setup fallback, or a Google Cloud Text-to-Speech voice using an API key you supply yourself.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Why would I use my own Google Cloud key instead of the built-in voice?<span class="plus"></span></summary>
+            <div class="faq-a">Cloud voices sound noticeably more natural. Using your own key also means your usage is billed against your own Google Cloud free-tier allowance — it's never shared with any other Audex user's usage.</div>
+          </details>
+          <details class="faq-item" id="cloud-tts-api-key">
+            <summary>How do I generate my own Google Cloud Text-to-Speech API key?<span class="plus"></span></summary>
+            <div class="faq-a">
+              <p style="margin:0 0 4px">It's billed to your own Google Cloud account, not shared with any other Audex user, and the Text-to-Speech API includes a free monthly quota that's generous for typical listening.</p>
+              <ol class="faq-steps">
+                <li>
+                  <b>Create a Google Cloud project</b>
+                  <p>If you don't already have one, create a new project — this is just a free container for the API you're about to enable. Any name works.</p>
+                  <a class="step-link" href="https://console.cloud.google.com/projectcreate" target="_blank" rel="noopener">Create a project in Google Cloud Console</a>
+                </li>
+                <li>
+                  <b>Enable billing on the project</b>
+                  <p>Google Cloud requires a billing account attached before it will issue API keys for most APIs, even ones with a free tier — you won't be charged unless you go past the free monthly quota, and you can set a spending cap.</p>
+                  <a class="step-link" href="https://console.cloud.google.com/billing" target="_blank" rel="noopener">Set up billing</a>
+                </li>
+                <li>
+                  <b>Enable the Text-to-Speech API</b>
+                  <p>With your project selected, enable the Cloud Text-to-Speech API for it — the same link Audex's own "Get an API key" button opens.</p>
+                  <a class="step-link" href="https://console.cloud.google.com/apis/library/texttospeech.googleapis.com" target="_blank" rel="noopener">Enable the Text-to-Speech API</a>
+                </li>
+                <li>
+                  <b>Create an API key</b>
+                  <p>Go to <b>APIs &amp; Services → Credentials</b>, click <b>Create Credentials</b>, and choose <b>API key</b>. Google Cloud generates the key immediately — copy it somewhere safe.</p>
+                  <a class="step-link" href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Open Credentials</a>
+                </li>
+                <li>
+                  <b>Recommended: restrict the key to Text-to-Speech only</b>
+                  <p>On the same Credentials page, click the key you just created, and under <b>API restrictions</b> choose <b>Restrict key</b> and select only <b>Cloud Text-to-Speech API</b> — so the key can't be used for anything else if it were ever leaked.</p>
+                </li>
+                <li>
+                  <b>Paste it into Audex</b>
+                  <p>In Audex, go to <b>Settings → Books &amp; voices → Cloud voices</b>, turn on <b>Use your own Google Cloud API key</b>, and paste the key in. It's stored encrypted, only on your device.</p>
+                </li>
+              </ol>
+              <div class="faq-note"><b>Note:</b> Audex tracks your usage locally and lets you set a safety cap per voice tier in Settings, so you won't be surprised by billing — but the authoritative usage/billing numbers always live in your own Google Cloud Console, not in the app.</div>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>Can I download a book's narration for offline listening?<span class="plus"></span></summary>
+            <div class="faq-a">Yes, per book or per chapter.</div>
+          </details>
+        </div>
+      </section>
+
+      <section class="help-category" id="radio">
+        <h2>Internet Radio</h2>
+        <p class="cat-note">Real stations, and adding your own.</p>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Where do the stations come from?<span class="plus"></span></summary>
+            <div class="faq-a">The Radio Browser directory — a free, community-maintained list of thousands of real internet radio stations, searchable by name, country, or genre.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Can I add a station that isn't in the directory?<span class="plus"></span></summary>
+            <div class="faq-a">Yes — paste any direct stream URL you already have.</div>
+          </details>
+        </div>
+      </section>
+
+      <section class="help-category" id="sound-playback">
+        <h2>Sound &amp; Playback</h2>
+        <p class="cat-note">The equalizer, loudness, speed, and casting.</p>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What is an AutoEQ profile?<span class="plus"></span></summary>
+            <div class="faq-a">A correction curve measured for a specific pair of headphones, so the equalizer reshapes what you hear to match how that exact model performs — not a generic bass/treble guess. Audex bundles 113 of them.</div>
+          </details>
+          <details class="faq-item">
+            <summary>What does ReplayGain do?<span class="plus"></span></summary>
+            <div class="faq-a">Automatically matches loudness between tracks recorded at different volumes, so you're not reaching for the volume dial every time a new track starts.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Can I change playback speed without changing the pitch?<span class="plus"></span></summary>
+            <div class="faq-a">Yes — speed and pitch are independent controls, so slowing a lecture down doesn't make the narrator sound like a chipmunk.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Is there a sleep timer?<span class="plus"></span></summary>
+            <div class="faq-a">Yes, with a fixed duration or an "end of current track/chapter" option.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Can I cast to my TV or a speaker?<span class="plus"></span></summary>
+            <div class="faq-a">Yes, to any Chromecast-compatible device, from any source.</div>
+          </details>
+        </div>
+      </section>
+
+      <section class="help-category" id="everywhere">
+        <h2>Everywhere You Are</h2>
+        <p class="cat-note">Android Auto, Wear OS, and Android TV.</p>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Does Audex work with Android Auto?<span class="plus"></span></summary>
+            <div class="faq-a">Yes — browse and control playback from the car's own screen, with steering-wheel button support.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Is there a Wear OS app?<span class="plus"></span></summary>
+            <div class="faq-a">Yes, a standalone companion for your watch. Download tracks directly to it for a run with no phone nearby, or mirror whatever's currently playing on your phone in real time.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Is there an Android TV app?<span class="plus"></span></summary>
+            <div class="faq-a">Yes, a separate app built for the living room and a remote, with the same server connections, radio, and offline downloads as the phone app — plus a way to send local files straight from your phone to the TV over your home network.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Do I need to buy Audex again for my watch or TV?<span class="plus"></span></summary>
+            <div class="faq-a">No — one purchase, tied to your Google account, covers every device you sign into.</div>
+          </details>
+        </div>
+      </section>
+
+      <section class="help-category" id="account">
+        <h2>Account, Trial &amp; Purchase</h2>
+        <p class="cat-note">Pricing, trials, and reinstalling.</p>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Is Audex a subscription?<span class="plus"></span></summary>
+            <div class="faq-a">No. One payment, once, after the free trial. Nothing recurs, and no feature is later moved behind a second paywall.</div>
+          </details>
+          <details class="faq-item">
+            <summary>I reinstalled Audex — do I lose my trial or purchase?<span class="plus"></span></summary>
+            <div class="faq-a">No, both are tied to your Google account rather than the install, so they carry over automatically.</div>
+          </details>
+          <details class="faq-item">
+            <summary>How do I delete my account data?<span class="plus"></span></summary>
+            <div class="faq-a">See <a href="/delete-account/">Delete Your Account and Data</a> — it explains exactly what is and isn't deleted, and lets you confirm and delete it immediately.</div>
+          </details>
+        </div>
+      </section>
+
+      <section class="help-category" id="privacy-data">
+        <h2>Privacy &amp; Data</h2>
+        <p class="cat-note">What does and doesn't leave your device.</p>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Does Audex collect my listening history?<span class="plus"></span></summary>
+            <div class="faq-a">Not on any server we operate — it's stored on your device only. See the full <a href="/privacy-policy/">Privacy Policy</a> for exactly what does and doesn't leave your device.</div>
+          </details>
+          <details class="faq-item">
+            <summary>Does Audex show ads?<span class="plus"></span></summary>
+            <div class="faq-a">No, never — and there are no analytics or tracking SDKs in the app either.</div>
+          </details>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="/">
+          <img class="mark" src="/icon.svg" alt="">
+          <span class="word">Aude<span class="x">x</span></span>
+        </a>
+        <p>The audio player for what you already run. Made by Shafra Labs.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/#servers">Media servers</a></li>
+          <li><a href="/#files">Files &amp; books</a></li>
+          <li><a href="/#sound">Sound</a></li>
+          <li><a href="/#everywhere">Everywhere</a></li>
+          <li><a href="/#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="/help/">Help Center</a></li>
+          <li><a href="/privacy-policy/">Privacy Policy</a></li>
+          <li><a href="/delete-account/">Delete account &amp; data</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://shafralabs.com">Shafra Labs</a></li>
+          <li><a href="mailto:support@shafralabs.com">Contact support</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Shafra Labs</span>
+      <span>Audex is not affiliated with Jellyfin, Plex, Emby, Subsonic, Audiobookshelf, or Kodi.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/site.js?v=19"></script>
+</body>
+</html>

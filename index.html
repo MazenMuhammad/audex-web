@@ -3,117 +3,471 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Audex — Your offline audio &amp; audiobook player</title>
-<meta name="description" content="Audex plays your local audio files and reads your PDFs/EPUBs aloud, fully offline. No ads, no tracking, no subscription.">
-<link rel="icon" type="image/png" href="icon.png">
-<style>
-  :root {
-    --coral: #F2502C;
-    --coral-bright: #FF7A4D;
-    --bg: #ffffff;
-    --surface: #F7F5F3;
-    --text: #1B1815;
-    --text-muted: #6B655F;
-    --border: #EAE6E1;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --coral: #FF5A36;
-      --bg: #14120F;
-      --surface: #1E1B17;
-      --text: #F5F2EE;
-      --text-muted: #A8A199;
-      --border: #2B2822;
-    }
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.55;
-  }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 64px 24px 96px; }
-  header { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
-  header img { width: 56px; height: 56px; border-radius: 16px; }
-  header .word { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
-  header .word .x { color: var(--coral); }
-  .tagline { font-size: 20px; color: var(--text-muted); margin: 0 0 40px; max-width: 46ch; }
-  .cta {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--coral), var(--coral-bright));
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    padding: 13px 26px;
-    border-radius: 999px;
-    margin-bottom: 56px;
-  }
-  .cta.disabled { opacity: 0.5; pointer-events: none; }
-  h2 { font-size: 15px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin: 40px 0 16px; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 18px 20px;
-  }
-  .card h3 { margin: 0 0 6px; font-size: 16px; }
-  .card p { margin: 0; color: var(--text-muted); font-size: 14px; }
-  footer {
-    margin-top: 72px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-    font-size: 14px;
-    color: var(--text-muted);
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  footer a { color: var(--text-muted); }
-</style>
+<title>Audex — the audio player for what you already run</title>
+<meta name="description" content="Audex connects straight to Jellyfin, Plex, Emby, Subsonic, Audiobookshelf, or Kodi — or just the files already on your phone — and reads your PDFs and EPUBs aloud. $5 once, after a free 30-day trial. No subscription.">
+<link rel="icon" type="image/svg+xml" href="/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css?v=19">
 </head>
 <body>
+
+<header class="site-header">
   <div class="wrap">
-    <header>
-      <img src="icon.png" alt="Audex icon">
-      <div class="word">Aude<span class="x">x</span></div>
-    </header>
+    <a class="brand" href="/">
+      <img class="mark" src="/icon.svg" alt="">
+      <span class="word">Aude<span class="x">x</span></span>
+    </a>
+    <nav class="main-nav">
+      <a href="#servers">Servers</a>
+      <a href="#files">Files &amp; Books</a>
+      <a href="#sound">Sound</a>
+      <a href="#everywhere">Everywhere</a>
+      <a href="#pricing">Pricing</a>
+      <a href="/help/">Help</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-primary btn-sm" href="https://play.google.com/store/apps/details?id=com.audex"><span class="btn-text-full">Get Audex</span><span class="btn-text-short">Get</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<!-- Deliberately a sibling of <header>, not nested inside it: .site-header uses backdrop-filter,
+     which establishes a new containing block for position:fixed descendants — nesting this here
+     would collapse it to the header's own 72px box instead of covering the viewport. -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="#servers">Servers</a>
+  <a href="#files">Files &amp; Books</a>
+  <a href="#sound">Sound</a>
+  <a href="#everywhere">Everywhere</a>
+  <a href="#pricing">Pricing</a>
+  <a href="/help/">Help Center</a>
+  <a href="/privacy-policy/">Privacy Policy</a>
+</nav>
 
-    <p class="tagline">Your local audio and audiobook player. Plays the music, voice notes, and recordings already on your phone, and reads your PDFs and EPUBs aloud — fully offline.</p>
+<main>
 
-    <a class="cta disabled" href="#">Coming soon to Google Play</a>
-
-    <h2>What it does</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Local files, organized</h3>
-        <p>Browse by folder, album, or artist. Import a folder straight from Google Drive if that's where your files live.</p>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Audio player for Android</p>
+        <h1>Point it at your library.<br>It just plays.</h1>
+        <p class="lede">Audex connects straight to Jellyfin, Plex, Emby, Subsonic, Audiobookshelf, or Kodi — or just the files already on your phone. Browse your real library, the way your server already organizes it. No re-uploading, no ads, no account required to start.</p>
+        <div class="hero-ctas" style="margin-top:28px">
+          <div class="btn-row">
+            <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.audex">Get Audex on Google Play</a>
+            <a class="btn btn-ghost" href="#servers">See what it plays</a>
+          </div>
+          <p class="cta-caption">$5 once, after a free 30-day trial. No subscription, ever.</p>
+        </div>
+        <div class="hero-places">
+          <span class="place-pill"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="20" rx="2.2"/><path d="M11 18h2"/></svg></span>On your phone</span>
+          <span class="place-pill"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 16l1.5-5A2 2 0 0 1 8.4 9.5h7.2A2 2 0 0 1 17.5 11L19 16"/><rect x="3" y="16" width="18" height="4" rx="1.5"/></svg></span>In the car</span>
+          <span class="place-pill"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span>On the TV</span>
+          <span class="place-pill"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="7" width="10" height="10" rx="3"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg></span>On your wrist</span>
+        </div>
       </div>
-      <div class="card">
-        <h3>Books read aloud</h3>
-        <p>Import a PDF or EPUB and Audex reads it aloud with a real offline voice — no internet needed once the voice is downloaded.</p>
-      </div>
-      <div class="card">
-        <h3>Android Auto</h3>
-        <p>Browse and play everything from the car, with a proper queue, shuffle, and resume.</p>
-      </div>
-      <div class="card">
-        <h3>Your data stays yours</h3>
-        <p>No ads, no analytics, no tracking. Anything backed up lives in your own Google Drive account, not shared with anyone else.</p>
+      <div class="hero-visual" data-reveal>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-statusbar"><span>9:41</span><span>●●●</span></div>
+            <div class="mock-topbar">
+              <span class="chev">⌄</span>
+              <span class="label"><span class="ov">Playing from</span><br><span class="sv">Home NAS · Jellyfin</span></span>
+              <span style="width:14px"></span>
+            </div>
+            <div class="mock-art"><img src="https://freemusicarchive.org/image/?file=album_image%2FQYxLOzSiK8yt648IdidnP0iWK5aq3cm6TtXieY35.jpg&width=400&height=400&type=album" alt="Cover art for &quot;Chrome Sunset&quot; by Joseph Sacco, from the album Faded Memory (Free Music Archive, CC BY)"><div class="mock-eq"><span></span><span></span><span></span></div></div>
+            <p class="mock-title">Chrome Sunset</p>
+            <p class="mock-sub">Joseph Sacco · Home NAS</p>
+            <div class="mock-chips"><span>Speed 1.0×</span><span>Pitch</span><span>EQ</span><span>Sleep timer</span></div>
+            <div class="mock-slider"><i></i></div>
+            <div class="mock-times"><span>1:42</span><span>3:56</span></div>
+            <div class="mock-transport">
+              <span class="glyph">⤨</span>
+              <span class="glyph">⏮</span>
+              <span class="play"><svg viewBox="0 0 24 24" fill="#0B0A0D"><path d="M7 5v14l12-7z"/></svg></span>
+              <span class="glyph">⏭</span>
+              <span class="glyph">↻</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <h2>One-time purchase</h2>
-    <p style="color:var(--text-muted)">Free to try for a month. After that, a single one-time payment unlocks Audex for good — no subscription, and it works on every device signed into your Google account.</p>
+    <div class="wrap stat-strip" data-reveal>
+      <div class="pill-stat"><b>6</b><span>server platforms</span></div>
+      <div class="pill-stat"><b>113</b><span>headphone EQ profiles</span></div>
+      <div class="pill-stat"><b>5</b><span>places it runs</span></div>
+      <div class="pill-stat"><b>$5</b><span>once, ever</span></div>
+    </div>
+  </section>
 
-    <footer>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="help.html">Help</a>
-      <a href="mailto:support@shafralabs.com">Contact</a>
-    </footer>
+  <!-- ============ SERVERS ============ -->
+  <section id="servers">
+    <div class="wrap two-col">
+      <div data-reveal>
+        <p class="eyebrow">Media servers</p>
+        <h2>Whatever you're already self-hosting</h2>
+        <p class="lede" style="margin-top:14px">Audex connects directly to the server you already run. Browse Albums, Artists, Genres, and Playlists exactly the way your server organizes them — because it's your real library, not a copy synced into ours.</p>
+        <ul class="feature-list">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>Live connection status per server, right on the row — reconnect with one tap</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>Download anything for offline listening before a commute drops your signal</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>Jellyfin, Emby, Plex, and Kodi also stream your movies and shows, not just audio</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>Connect more than one — switch between them from the same source picker</li>
+        </ul>
+        <div class="backend-grid">
+          <div class="backend-item"><span class="logo-chip"><img src="/logos/navidrome.png" alt="Navidrome logo"></span><span class="label">Subsonic / Navidrome</span></div>
+          <div class="backend-item"><span class="logo-chip"><img src="/logos/jellyfin.svg" alt="Jellyfin logo"></span><span class="label">Jellyfin</span></div>
+          <div class="backend-item"><span class="logo-chip"><img src="/logos/emby.png" alt="Emby logo"></span><span class="label">Emby</span></div>
+          <div class="backend-item"><span class="logo-chip"><img src="/logos/audiobookshelf.png" alt="Audiobookshelf logo"></span><span class="label">Audiobookshelf</span></div>
+          <div class="backend-item"><span class="logo-chip"><img src="/logos/plex.png" alt="Plex logo"></span><span class="label">Plex</span></div>
+          <div class="backend-item"><span class="logo-chip"><img src="/logos/kodi.svg" alt="Kodi logo"></span><span class="label">Kodi</span></div>
+        </div>
+      </div>
+      <div class="col-visual" data-reveal>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-statusbar"><span>9:41</span><span>●●●</span></div>
+            <div class="mock-header-row" style="margin-top:8px"><span class="chev">←</span><span class="h">Settings</span></div>
+            <div class="mock-procard">
+              <div class="mock-procard-top"><b>Audex</b><span>TRIAL</span></div>
+              <div class="mock-procard-bar"><i></i></div>
+              <div class="mock-procard-bottom"><span class="days">12 days left</span><span class="unlock">Unlock for $5 →</span></div>
+            </div>
+            <p class="mock-overline">Media servers · 3 · 2 offline</p>
+            <div class="mock-server-card">
+              <div class="mock-server-row">
+                <span class="logo-chip sm"><img src="/logos/navidrome.png" alt="Navidrome logo"></span>
+                <div class="mock-server-info"><b>Home NAS</b><div class="mock-server-status"><i style="background:var(--status-online)"></i><span>Subsonic · Online</span></div></div>
+              </div>
+              <div class="mock-server-row">
+                <span class="logo-chip sm"><img src="/logos/jellyfin.svg" alt="Jellyfin logo"></span>
+                <div class="mock-server-info"><b>Office Jellyfin</b><div class="mock-server-status"><i style="background:var(--status-error)"></i><span>Wrong password</span></div></div>
+                <span class="mock-server-action">Fix</span>
+              </div>
+              <div class="mock-server-row">
+                <span class="logo-chip sm"><img src="/logos/kodi.svg" alt="Kodi logo"></span>
+                <div class="mock-server-info"><b>Cabin Kodi</b><div class="mock-server-status"><i style="background:#6B6873"></i><span>Kodi · Offline · unreachable</span></div></div>
+                <span class="mock-server-action">Reconnect</span>
+              </div>
+              <div class="mock-add-row">+ Add a server</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FILES & CLOUD ============ -->
+  <section id="files" class="section-alt">
+    <div class="wrap two-col reverse">
+      <div class="col-visual" data-reveal>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-statusbar"><span>9:41</span><span>●●●</span></div>
+            <p class="mock-title" style="font-size:22px;margin:8px 0 14px">Library</p>
+            <div class="mock-pill-row">
+              <span>Local</span>
+              <span>Books</span>
+              <span class="active"><i class="tile" style="background:linear-gradient(135deg,#3A4A6B,#161C2C)"></i>Home NAS</span>
+            </div>
+            <div class="mock-search">Search Home NAS</div>
+            <div class="mock-pill-row">
+              <span class="active">Albums</span><span>Artists</span><span>Genres</span><span>Playlists</span>
+            </div>
+            <div class="mock-grid">
+              <div class="mock-card"><div class="art" style="background:var(--jewel-1)"><span class="initial">H</span><span class="dur">38:01</span></div><div class="meta"><b>Horizon Line</b><span>Artist Name</span></div></div>
+              <div class="mock-card"><div class="art" style="background:var(--jewel-2)"><span class="initial">R</span><span class="dur">41:07</span></div><div class="meta"><b>Reverie</b><span>Artist Name</span></div></div>
+              <div class="mock-card"><div class="art" style="background:var(--jewel-3)"><span class="initial">N</span><span class="dur">36:22</span></div><div class="meta"><b>Nocturne</b><span>Artist Name</span></div></div>
+              <div class="mock-card"><div class="art" style="background:var(--jewel-4)"><span class="initial">C</span><span class="dur">44:15</span></div><div class="meta"><b>Cascade</b><span>Artist Name</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-reveal>
+        <p class="eyebrow">Local files &amp; cloud folders</p>
+        <h2>No server? Your files work just as well</h2>
+        <p class="lede" style="margin-top:14px">Point Audex at any folder on your device, or connect Google Drive, Dropbox, OneDrive, a WebDAV address, or an SMB network share. Everything groups itself into Albums, Artists, and Folders automatically — no manual tagging.</p>
+        <ul class="feature-list">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>One-tap shortcuts for the folders WhatsApp voice notes and your phone's own recorder already use</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>A connected cloud folder downloads once, then plays like any local file — no live connection needed after</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>Search scoped to whichever source you're browsing — local files, a server, or your books</li>
+        </ul>
+        <div class="chip-row" style="margin-top:var(--space-6)">
+          <span class="chip">Google Drive</span>
+          <span class="chip">Dropbox</span>
+          <span class="chip">OneDrive</span>
+          <span class="chip">WebDAV</span>
+          <span class="chip">SMB share</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BOOKS ============ -->
+  <section id="books">
+    <div class="wrap two-col">
+      <div data-reveal>
+        <p class="eyebrow">PDF &amp; EPUB, read aloud</p>
+        <h2>Turn any book into an audiobook</h2>
+        <p class="lede" style="margin-top:14px">Import a PDF or EPUB and Audex reads it back to you, chapter by chapter — using the book's own table of contents, not a blind page-count guess. As it reads, the line being spoken highlights on screen so you can follow along.</p>
+        <ul class="feature-list">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>A fully offline neural voice, once downloaded — no internet needed to keep reading</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>Or your phone's built-in text-to-speech, zero setup required</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>Or bring your own Google Cloud key for studio-grade voices — billed to your own account, never shared with anyone else's usage</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>Download a book's narration per chapter, so a long commute doesn't need signal</li>
+        </ul>
+      </div>
+      <div class="col-visual" data-reveal>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-statusbar"><span>9:41</span><span>●●●</span></div>
+            <div class="mock-topbar">
+              <span class="chev">⌄</span>
+              <span class="label"><span class="ov">Reading</span><br><span class="sv">Treasure Island</span></span>
+              <span style="width:14px"></span>
+            </div>
+            <div class="mock-art" style="height:170px;aspect-ratio:auto"><img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Treasure_Island-Scribner%27s-1911.jpg" alt="N. C. Wyeth's 1911 cover illustration for Treasure Island, public domain" style="object-position:center 30%"></div>
+            <p class="mock-title" style="font-size:15px;margin:12px 0 10px">Ch. 1 — The Old Sea-Dog</p>
+            <div class="mock-transcript">
+              <p>The old sea-dog took up his lodging at the Admiral Benbow.</p>
+              <p class="active">His stories were what frightened people worst of all.</p>
+              <p>Sea-songs, mostly, of a very desperate character.</p>
+            </div>
+            <div class="mock-chips"><span>Voice: Piper</span><span>Speed 1.0×</span><span>Sleep timer</span></div>
+            <div class="mock-transport">
+              <span class="glyph">«</span>
+              <span class="glyph">⏮</span>
+              <span class="play"><svg viewBox="0 0 24 24" fill="#0B0A0D"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg></span>
+              <span class="glyph">⏭</span>
+              <span class="glyph">»</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RADIO (compact) ============ -->
+  <section class="section-alt">
+    <div class="wrap" style="text-align:center;max-width:720px" data-reveal>
+      <p class="eyebrow" style="justify-content:center">Internet radio</p>
+      <h2>Or just put something on</h2>
+      <p class="lede" style="margin:14px auto 0">Thousands of real stations from the Radio Browser directory — searchable by country or genre — plus room for any custom stream URL you already know.</p>
+    </div>
+  </section>
+
+  <!-- ============ SOUND ============ -->
+  <section id="sound">
+    <div class="wrap two-col reverse">
+      <div class="col-visual" data-reveal>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-statusbar"><span>9:41</span><span>●●●</span></div>
+            <div class="mock-header-row" style="margin-top:8px"><span class="chev">←</span><span class="h">Equalizer</span></div>
+            <div class="mock-eq-curve">
+              <svg viewBox="0 0 260 96" preserveAspectRatio="none">
+                <line x1="0" y1="24" x2="260" y2="24" stroke="rgba(255,255,255,.06)"/>
+                <line x1="0" y1="48" x2="260" y2="48" stroke="rgba(255,255,255,.06)"/>
+                <line x1="0" y1="72" x2="260" y2="72" stroke="rgba(255,255,255,.06)"/>
+                <path d="M0,58 C 40,66 60,20 100,18 C 140,16 160,54 200,50 C 225,47 245,30 260,26" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="100" cy="18" r="5" fill="var(--coral)"/>
+                <circle cx="200" cy="50" r="5" fill="var(--coral)"/>
+              </svg>
+            </div>
+            <div class="mock-preset-row" style="margin-bottom:16px">
+              <span>Balanced</span><span class="active">Bass boost</span><span>Smooth</span><span>Dynamic</span><span>Treble boost</span>
+            </div>
+            <p class="mock-overline">Headphone profile</p>
+            <div class="mock-server-card" style="margin-bottom:16px">
+              <div class="mock-server-row"><div class="mock-server-info"><b>Sony WH-1000XM5</b><span style="font:500 10.5px var(--font);color:#9B98A4">AutoEQ profile · 113 available</span></div><span class="chev" style="color:#9B98A4">›</span></div>
+            </div>
+            <div class="mock-chips"><span>ReplayGain: On</span><span>Speed / Pitch</span><span>Sleep timer</span></div>
+          </div>
+        </div>
+      </div>
+      <div data-reveal>
+        <p class="eyebrow">Sound, tuned to you</p>
+        <h2>A real equalizer, not a toy one</h2>
+        <p class="lede" style="margin-top:14px">Pick your actual headphones from 113 curated AutoEQ profiles, and Audex reshapes the curve to match them — not a generic bass/treble slider pretending to know your gear.</p>
+        <ul class="feature-list">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>ReplayGain loudness correction, so you're not reaching for the volume dial between tracks</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>Independent speed and pitch control — slow a lecture down without the chipmunk effect</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>A sleep timer with a fixed duration or "end of chapter"</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>Cast to any Chromecast-compatible TV or speaker, from any source</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EVERYWHERE ============ -->
+  <section id="everywhere" class="section-alt">
+    <div class="wrap">
+      <div class="section-head center" data-reveal>
+        <p class="eyebrow" style="justify-content:center">One app, every screen</p>
+        <h2>It's not just a phone app</h2>
+        <p class="lede" style="margin:14px auto 0">One purchase, tied to your Google account, covers every device you sign into.</p>
+      </div>
+      <div class="device-grid" data-reveal>
+        <div class="device-card">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="20" rx="2"/><circle cx="12" cy="18" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <h3>Phone</h3>
+          <p>Every server, every file, every book — the full app.</p>
+        </div>
+        <div class="device-card">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 16l1.5-5A2 2 0 0 1 8.4 9.5h7.2A2 2 0 0 1 17.5 11L19 16"/><rect x="3" y="16" width="18" height="4" rx="1.5"/><circle cx="7.5" cy="20" r="1.2" fill="currentColor" stroke="none"/><circle cx="16.5" cy="20" r="1.2" fill="currentColor" stroke="none"/></svg></span>
+          <h3>Android Auto</h3>
+          <p>Browse and play hands-free from the dashboard, with working steering-wheel controls.</p>
+        </div>
+        <div class="device-card">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="7" width="10" height="10" rx="3"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3M9 17v3a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-3"/></svg></span>
+          <h3>Wear OS</h3>
+          <p>Download tracks straight to your watch for a run with no phone, or mirror what's playing on your phone in real time.</p>
+        </div>
+        <div class="device-card">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span>
+          <h3>Android TV</h3>
+          <p>A D-pad-built app for the living room, with the same servers and radio — plus phone-to-TV file sync.</p>
+        </div>
+        <div class="device-card">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/><path d="M3 12a6 6 0 0 1 6 6"/><path d="M3 16a2 2 0 0 1 2 2"/><circle cx="3.5" cy="18.5" r="1" fill="currentColor" stroke="none"/></svg></span>
+          <h3>Chromecast</h3>
+          <p>Cast straight to any TV or speaker in the room, from whatever's currently playing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRIVACY ============ -->
+  <section>
+    <div class="wrap">
+      <div class="section-head center" data-reveal>
+        <p class="eyebrow" style="justify-content:center">Privacy</p>
+        <h2>We don't want your data. We never asked for it.</h2>
+      </div>
+      <div class="priv-grid" data-reveal>
+        <div class="priv-item"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg></span><div><h3>No ads, ever</h3><p>No ad or analytics SDKs of any kind, anywhere in the app.</p></div></div>
+        <div class="priv-item"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg></span><div><h3>Your media stays yours</h3><p>Files, playlists, and listening history stay on your device — never uploaded to us.</p></div></div>
+        <div class="priv-item"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg></span><div><h3>You choose what connects</h3><p>Cloud accounts and servers you connect are accessed only for what you explicitly select.</p></div></div>
+        <div class="priv-item"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg></span><div><h3>We never see your payment</h3><p>Purchases go straight through Google Play — payment details never reach our servers.</p></div></div>
+      </div>
+      <p style="text-align:center;margin-top:24px" data-reveal><a href="/privacy-policy/" style="color:var(--coral);font-weight:700">Read the full Privacy Policy →</a></p>
+    </div>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section id="pricing" class="section-alt">
+    <div class="wrap">
+      <div class="section-head center" data-reveal>
+        <p class="eyebrow" style="justify-content:center">Pricing</p>
+        <h2>One price. Never again.</h2>
+      </div>
+      <div class="pricing-card" data-reveal>
+        <span class="pricing-trial-pill">30-day free trial</span>
+        <div class="price-figure"><sup>$</sup>5</div>
+        <p class="price-note">once — not a subscription</p>
+        <ul class="pricing-list">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>Every feature unlocked for the full 30-day trial</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>No recurring charge, no second tier hiding features later</li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span>Works on every device signed into the same Google account — phone, watch, TV, and all</li>
+        </ul>
+        <a class="btn btn-primary btn-block" href="https://play.google.com/store/apps/details?id=com.audex">Get Audex</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MINI FAQ ============ -->
+  <section>
+    <div class="wrap" style="max-width:760px">
+      <div class="section-head center" data-reveal>
+        <p class="eyebrow" style="justify-content:center">Questions</p>
+        <h2>A few things people ask first</h2>
+      </div>
+      <div class="faq-list" data-reveal>
+        <details class="faq-item">
+          <summary>Do I need a media server to use Audex?<span class="plus"></span></summary>
+          <div class="faq-a">No — local files, cloud folders, internet radio, and your own PDFs/EPUBs all work with nothing else set up. A media server is one more source, not a requirement.</div>
+        </details>
+        <details class="faq-item">
+          <summary>What happens after the 30-day trial?<span class="plus"></span></summary>
+          <div class="faq-a">A single $5 payment through Google Play, and it's yours for good — no subscription, no recurring charge.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Does it work without an internet connection?<span class="plus"></span></summary>
+          <div class="faq-a">Yes — local files, anything you've downloaded, and on-device text-to-speech voices all work with no connection at all.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Which media servers does it support?<span class="plus"></span></summary>
+          <div class="faq-a">Jellyfin, Emby, Plex, Subsonic and its compatible siblings (Navidrome, OpenSubsonic), Audiobookshelf, and Kodi.</div>
+        </details>
+      </div>
+      <p style="text-align:center;margin-top:28px" data-reveal><a href="/help/" style="color:var(--coral);font-weight:700">Browse the full Help Center →</a></p>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>Point it at your library.</h2>
+      <p class="lede">$5 once, after a free 30-day trial. No subscription, ever.</p>
+      <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.audex">Get Audex on Google Play</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="/">
+          <img class="mark" src="/icon.svg" alt="">
+          <span class="word">Aude<span class="x">x</span></span>
+        </a>
+        <p>The audio player for what you already run. Made by Shafra Labs.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#servers">Media servers</a></li>
+          <li><a href="#files">Files &amp; books</a></li>
+          <li><a href="#sound">Sound</a></li>
+          <li><a href="#everywhere">Everywhere</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="/help/">Help Center</a></li>
+          <li><a href="/privacy-policy/">Privacy Policy</a></li>
+          <li><a href="/delete-account/">Delete account &amp; data</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://shafralabs.com">Shafra Labs</a></li>
+          <li><a href="mailto:support@shafralabs.com">Contact support</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Shafra Labs</span>
+      <span>Audex is not affiliated with Jellyfin, Plex, Emby, Subsonic, Audiobookshelf, or Kodi.</span>
+    </div>
   </div>
+</footer>
+
+<script src="/site.js?v=19"></script>
 </body>
 </html>
