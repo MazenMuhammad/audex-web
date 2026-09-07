@@ -157,7 +157,7 @@
 
   <h1>Privacy Policy</h1>
   <div class="meta">
-    <span>Effective: <b>August 30, 2026</b></span>
+    <span>Effective: <b>September 1, 2026</b></span>
     <span>Applies to: <b>Audex for Android</b></span>
   </div>
 
@@ -171,6 +171,7 @@
       <li>We never sell your data or share it with advertisers.</li>
       <li>Cloud storage (Google Drive, Dropbox, OneDrive, etc.) is accessed only with your explicit authorization, to fetch content you choose.</li>
       <li>Purchases are processed entirely by Google Play — we never see your payment details.</li>
+      <li>If the app crashes, a technical crash report is sent automatically to help us fix it — you can turn this off at any time.</li>
     </ul>
   </div>
 
@@ -205,13 +206,17 @@
     <p>If you choose to connect a cloud storage account (such as Google Drive, Dropbox, OneDrive, or a self-hosted server) to import content, Audex accesses only what's needed to browse and retrieve the specific items you select. Any access credentials are stored securely on your device and are never sent to us.</p>
 
     <h3>1.4 Purchase confirmation</h3>
-    <p>Purchases are handled entirely by Google Play. We receive only a confirmation that a purchase was completed — never your payment card, billing address, or other financial details.</p>
+    <p>Purchases are handled entirely by Google Play and confirmed directly on your device through Google's own Play Billing system. We never receive your payment card, billing address, or any other financial or purchase detail on any server we operate.</p>
 
-    <h3>1.5 Subscription and trial status</h3>
-    <p>To recognize your free trial and purchase across your devices, our servers store a minimal record tied to your Google account: an account identifier and the relevant dates (trial start, purchase confirmation). Nothing else about you or your activity is stored there.</p>
+    <h3>1.5 Trial status</h3>
+    <p>To recognize your free trial consistently across reinstalls and devices signed into the same Google account, our servers store a minimal record tied to that account: an account identifier and the date your trial first began. This record does not include whether or when you've purchased Audex — that's determined entirely on your own device, directly from Google Play, each time the app checks.</p>
+    <p>We also retain a second, separate value: a one-way cryptographic hash of your account identifier, which cannot be reversed to reveal who it belongs to. Its only purpose is recognizing that a given account has already used a trial, even after the record above has been deleted — without it, deleting and recreating that record would let a trial be reset indefinitely. This hash carries no information about you or your activity beyond that one yes/no fact, and nothing else about you or your activity is stored on our servers.</p>
 
     <h3>1.6 Feedback you choose to send</h3>
     <p>If you submit a bug report or feature request, we receive the message you write along with basic app and device information (app version, device model, Android version) to help us respond. You may optionally choose to include a screenshot and a short excerpt of on-device diagnostic logs — these are only ever sent if you actively opt in for that specific report, and you can review exactly what will be sent before it's submitted.</p>
+
+    <h3>1.7 Automatic crash reports</h3>
+    <p>If Audex crashes on your phone, tablet, TV, or watch, a technical crash report is sent automatically so we can identify and fix the underlying bug. This report contains only a stack trace (which line of code failed and why) and basic app and device information (app version, device model, Android version). It never includes a screenshot, a copy of your on-device activity log, or the contents of your media library — on rare occasions, the stack trace itself may reference a local file or folder path if that's what the underlying error refers to, but it never includes what's inside that file. A crash on a paired Wear OS watch is relayed through your phone to reach us, since the watch has no direct internet connection of its own for this. Automatic crash reporting is on by default and can be turned off at any time in Settings on your phone or TV — turning it off on the phone also stops crash reports being sent on behalf of a paired watch.</p>
   </section>
 
   <section id="how-we-use-it">
@@ -222,6 +227,7 @@
       <li>Retrieve content you explicitly choose to import from a connected cloud source</li>
       <li>Verify your free trial or purchase status</li>
       <li>Respond to bug reports and feature requests</li>
+      <li>Diagnose and fix crashes</li>
       <li>Maintain the security and reliability of the app</li>
     </ul>
     <p>We do not use your information for advertising, profiling, or any purpose beyond operating the features described in this policy.</p>
@@ -248,7 +254,7 @@
     <ul>
       <li><b>On your device</b> — retained until you delete it or uninstall Audex, at which point it is removed along with the app.</li>
       <li><b>Backups you create</b> — if you use the optional backup feature, your backup is stored in your own cloud account, under your control, and can be deleted at any time by revoking Audex's access from that account's settings.</li>
-      <li><b>Subscription/trial record</b> — retained only as long as needed to maintain your entitlement; you may request its deletion at any time (see Section 7).</li>
+      <li><b>Trial record</b> — the identifiable version (your account identifier and trial-start date) is retained only as long as needed to maintain your entitlement, and you may request its deletion at any time (see Section 7). The separate one-way hashed value described in Section 1.5 is retained indefinitely to prevent repeatedly resetting a trial, and cannot be used to identify you or your activity.</li>
       <li><b>Feedback reports</b> — retained only as long as needed to review and respond to the report.</li>
     </ul>
   </section>
@@ -262,10 +268,11 @@
   <section id="your-choices">
     <h2><span class="num">7.</span> Your Choices and Rights</h2>
     <p>Depending on where you live, you may have rights to access, correct, or delete your personal information. In Audex, you can exercise most of these directly:</p>
+    <h3 id="delete-your-data">Delete your account and data</h3>
     <ul>
-      <li><b>Delete local data:</b> uninstall the app, or use the in-app options to clear your history or remove imported content.</li>
-      <li><b>Delete a cloud backup:</b> revoke Audex's access from your <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Google Account permissions</a> (or the equivalent settings for another provider), which removes the backup data stored there.</li>
-      <li><b>Delete your subscription/trial record:</b> contact us using the details below and we will delete it.</li>
+      <li><b>Delete local data:</b> uninstall the app, or use the in-app options to clear your history or remove imported content. This takes effect immediately, without contacting us.</li>
+      <li><b>Delete a cloud backup:</b> revoke Audex's access from your <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Google Account permissions</a> (or the equivalent settings for another provider), which removes the backup data stored there. This takes effect immediately, without contacting us.</li>
+      <li><b>Delete your trial record:</b> this deletes the identifiable version of the data described in Section 1.5 — your account identifier and trial-start date — immediately, with no waiting on a reply. It does not delete the separate, one-way hashed value described there, since that value cannot identify you or your activity and exists specifically to prevent indefinitely resetting a trial by repeating this deletion. Visit <a href="delete-account.html">Delete Your Account and Data</a> and sign in with the same Google account you use in Audex to confirm. You can also <a href="mailto:support@shafralabs.com?subject=Delete%20my%20Audex%20data">email us</a> if you'd rather not sign in from a browser.</li>
       <li><b>Disconnect a cloud source:</b> revoke access at any time from that provider's own account settings.</li>
     </ul>
     <p>To make any other request regarding your personal information, contact us at the email address in Section 11.</p>
@@ -289,13 +296,13 @@
   <section id="contact">
     <h2><span class="num">11.</span> Contact Us</h2>
     <p>Questions about this policy, or requests regarding your personal information, can be sent to:</p>
-    <p><a href="mailto:audex.support@gmail.com">audex.support@gmail.com</a></p>
+    <p><a href="mailto:support@shafralabs.com">support@shafralabs.com</a></p>
     <a class="back-to-top" href="#">↑ Back to top</a>
   </section>
 
   <footer>
     <a href="index.html">← Back to Audex</a>
-    <a href="mailto:audex.support@gmail.com">Contact</a>
+    <a href="mailto:support@shafralabs.com">Contact</a>
   </footer>
 </div>
 </body>
